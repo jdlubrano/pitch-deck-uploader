@@ -1,4 +1,6 @@
-# README
+# Pitch Deck Uploader
+
+[![RSpec](https://github.com/jdlubrano/pitch-deck-uploader/actions/workflows/rspec.yml/badge.svg)](https://github.com/jdlubrano/pitch-deck-uploader/actions/workflows/rspec.yml)
 
 ## Overview
 
