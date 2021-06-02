@@ -22,6 +22,11 @@
 !/tmp/pids/
 !/tmp/pids/.keep
 
+# Ignore tmp/db data, but keep the directory (for Docker).
+/tmp/db/*
+!/tmp/db/
+!/tmp/db/.keep
+
 # Ignore uploaded files in development.
 /storage/*
 !/storage/.keep
