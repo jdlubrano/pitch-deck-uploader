@@ -20,7 +20,7 @@ const App = props => {
           <Link className="navbar-brand" to="/">Pitch Deck Uploader</Link>
         </div>
       </nav>
-      <div className="container route-content">
+      <div className="container route-content pt-4">
         <Switch>
           <Route path="/pitch_decks/new">
             <NewPitchDeck />

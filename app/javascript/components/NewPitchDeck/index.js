@@ -1,9 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+import PitchDeckForm from "../PitchDeckForm";
+
 const NewPitchDeck = props => {
   return (
-    <div>New Pitch Deck</div>
+    <PitchDeckForm />
   );
 };
 
