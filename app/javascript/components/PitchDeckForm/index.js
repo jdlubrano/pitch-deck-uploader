@@ -1,16 +1,24 @@
 import React, { useRef, useState } from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
+import { createPitchDeck } from "../../utils/Api";
+import DismissibleAlert from "../DismissibleAlert";
 import PdfPage from "../PdfPage";
 
 const pdfjs = require("pdfjs-dist/webpack");
 
 const PitchDeckForm = ({ pitchDeck }) => {
+  const history = useHistory();
+  const fileInputRef = useRef(null);
   const [name, setName] = useState(pitchDeck.name);
   const [pdf, setPdf] = useState(null);
   const [previewPage, setPreviewPage] = useState(null);
-  const fileInputRef = useRef(null);
+
+  const [notification, setNotification] = useState({
+    message: null,
+    status: null
+  });
 
   const handleFileChosen = async (event) => {
     setPdf(null);
@@ -30,9 +38,42 @@ const PitchDeckForm = ({ pitchDeck }) => {
     setPreviewPage(page);
   };
 
-  const submitPitchDeck = event => {
+  const submitPitchDeck = async (event) => {
     event.preventDefault();
-    console.log("Submit form", name, fileInputRef.current.value);
+
+    const response = await createPitchDeck({
+      name,
+      file: fileInputRef.current.files[0]
+    });
+
+    const notification = {};
+
+    if (response.ok) {
+      resetState();
+      const pitchDeck = response;
+
+      notification.message = (
+        <>
+          Successfully uploaded pitch deck!
+          <Link to={`/pitch_decks/${pitchDeck.id}`}>View</Link>
+        </>
+      );
+
+      notification.status = "success";
+    } else {
+      console.log(response);
+      const instructions = null;
+
+      notification.message = (
+        <>
+          Failed to upload pitch deck. {instructions || "Please try again."}
+        </>
+      );
+
+      notification.status = "danger";
+    }
+
+    setNotification(notification);
   };
 
   const resetState = () => {
@@ -76,6 +117,15 @@ const PitchDeckForm = ({ pitchDeck }) => {
           <button className="btn btn-light" type="reset">Clear</button>
         </div>
       </form>
+      {notification.status && (
+        <div className="row">
+          <div className="col-12">
+            <DismissibleAlert status={notification.status}>
+              {notification.message}
+            </DismissibleAlert>
+          </div>
+        </div>
+      )}
       {pdf && previewPage && (
         <div className="row">
           <div className="col-12">
