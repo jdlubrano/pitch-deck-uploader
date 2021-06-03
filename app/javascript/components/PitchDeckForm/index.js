@@ -2,13 +2,45 @@ import React, { useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
+const pdfjs = require("pdfjs-dist/webpack");
+
 const PitchDeckForm = ({ pitchDeck }) => {
+  const [convertingPdf, setConvertingPdf] = useState(false);
   const [name, setName] = useState(pitchDeck.name);
+  const [pitchDeckSlides, setPitchDeckSlides] = useState([]);
   const fileInputRef = useRef(null);
 
-  const handleFileChosen = event => {
+  const handleFileChosen = async (event) => {
     const file = fileInputRef.current.files[0];
-    console.log(file);
+
+    if (!file) {
+      return;
+    }
+
+    const slides = [];
+    const buffer = await file.arrayBuffer();
+    const pdf = await pdfjs.getDocument(buffer).promise;
+
+    for (let i = 1; i <= pdf.numPages; i++) {
+      const page = await pdf.getPage(i);
+      const viewport = page.getViewport({scale: 0.5});
+      const canvas = document.createElement("canvas");
+      const canvasContext = canvas.getContext('2d');
+      canvas.height = viewport.height;
+      canvas.width = viewport.width;
+
+      const renderContext = {
+        canvasContext,
+        viewport
+      };
+
+      await page.render(renderContext).promise;
+      document.body.appendChild(canvas);
+      slides.push(canvas.toDataURL());
+    }
+
+    console.log(slides[0]);
+    setPitchDeckSlides(slides);
   };
 
   const submitPitchDeck = event => {
