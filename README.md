@@ -19,6 +19,7 @@ page).
 ### Without Docker
 
 ```
+nvm use
 ./bin/setup
 bundle exec rspec
 ```
