@@ -19,9 +19,13 @@ page).
 ### Without Docker
 
 ```
+# Set up environment
 nvm use
 ./bin/setup
+
+# Run tests to verify setup
 bundle exec rspec
+yarn test
 ```
 
 ### With Docker
