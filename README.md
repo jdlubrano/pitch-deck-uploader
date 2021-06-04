@@ -1,5 +1,6 @@
 # Pitch Deck Uploader
 
+[![JS tests](https://github.com/jdlubrano/pitch-deck-uploader/actions/workflows/js_test.yml/badge.svg)](https://github.com/jdlubrano/pitch-deck-uploader/actions/workflows/js_test.yml)
 [![RSpec](https://github.com/jdlubrano/pitch-deck-uploader/actions/workflows/rspec.yml/badge.svg)](https://github.com/jdlubrano/pitch-deck-uploader/actions/workflows/rspec.yml)
 
 ## Overview
