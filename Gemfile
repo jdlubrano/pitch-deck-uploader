@@ -4,6 +4,8 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '3.0.1'
 
 gem 'rails', '~> 6.1.3', '>= 6.1.3.2'
+
+gem 'interactor', '~> 3.1.2'
 gem 'jbuilder', '~> 2.7'
 gem 'pg', '~> 1.2'
 gem 'puma', '~> 5.0'
@@ -22,6 +24,7 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'dotenv-rails', '~> 2.7'
+  gem 'factory_bot_rails', '~> 6.2.0'
   gem 'rspec', '~> 3.10'
   gem 'rspec-rails', '~> 5.0'
   gem 'shoulda-matchers', '~> 4.5.1'

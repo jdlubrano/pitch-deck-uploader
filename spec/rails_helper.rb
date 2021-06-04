@@ -22,6 +22,10 @@ RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
   config.filter_rails_from_backtrace!
 
+  config.before(:suite) do
+    FactoryBot.lint
+  end
+
   config.after(:each) do
     FileUtils.rm_rf(ActiveStorage::Blob.service.root)
   end
