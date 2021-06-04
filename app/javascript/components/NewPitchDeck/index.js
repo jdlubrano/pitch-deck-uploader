@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 import PitchDeckForm from "../PitchDeckForm";
 
-const NewPitchDeck = props => {
+const NewPitchDeck = () => {
   return (
     <PitchDeckForm />
   );

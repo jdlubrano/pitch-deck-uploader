@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import PropTypes from "prop-types";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import { createPitchDeck } from "../../utils/Api";
 import DismissibleAlert from "../DismissibleAlert";
@@ -9,7 +9,6 @@ import PdfPage from "../PdfPage";
 const pdfjs = require("pdfjs-dist/webpack");
 
 const PitchDeckForm = ({ pitchDeck }) => {
-  const history = useHistory();
   const fileInputRef = useRef(null);
   const [name, setName] = useState(pitchDeck.name);
   const [pdf, setPdf] = useState(null);

@@ -6,11 +6,16 @@ const PdfPage = ({ pdfPage }) => {
 
   async function renderPdfPage() {
     const canvas = canvasRef.current;
+
+    if (!canvas) {
+      return
+    }
+
     const canvasContext = canvas.getContext('2d');
 
     const renderContext = {
-    canvasContext,
-    viewport
+      canvasContext,
+      viewport
     };
 
     await pdfPage.render(renderContext).promise;
