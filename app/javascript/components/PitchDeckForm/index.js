@@ -50,23 +50,20 @@ const PitchDeckForm = ({ pitchDeck }) => {
 
     if (response.ok) {
       resetState();
-      const pitchDeck = response;
+      const { pitchDeck } = response;
 
       notification.message = (
         <>
           Successfully uploaded pitch deck!
-          <Link to={`/pitch_decks/${pitchDeck.id}`}>View</Link>
+          <Link className="ms-2" to={`/pitch_decks/${pitchDeck.id}`}>View</Link>
         </>
       );
 
       notification.status = "success";
     } else {
-      console.log(response);
-      const instructions = null;
-
       notification.message = (
         <>
-          Failed to upload pitch deck. {instructions || "Please try again."}
+          Failed to upload pitch deck. {response.error?.message || "Please try again."}
         </>
       );
 
@@ -78,6 +75,7 @@ const PitchDeckForm = ({ pitchDeck }) => {
 
   const resetState = () => {
     setName("");
+    fileInputRef.current.value = "";
     setPdf(null);
     setPreviewPage(null);
   };
