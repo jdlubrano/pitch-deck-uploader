@@ -45,3 +45,4 @@ yarn-debug.log*
 .yarn-integrity
 
 spec/examples.txt
+*.swp
