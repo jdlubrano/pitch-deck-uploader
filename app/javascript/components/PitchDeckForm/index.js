@@ -81,7 +81,7 @@ const PitchDeckForm = ({ pitchDeck }) => {
 
   return (
     <>
-      <form className="row mb-3" onReset={resetState} onSubmit={submitPitchDeck}>
+      <form className="row mb-3" onReset={resetState} onSubmit={submitPitchDeck} data-testid="test-pitch-deck-form">
         <p className="col-12 mb-2">
           Upload a New Pitch Deck
         </p>
