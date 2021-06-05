@@ -1,16 +1,12 @@
 import React from "react";
-import { BrowserRouter as Router } from "react-router-dom";
+import { MemoryRouter as Router } from "react-router-dom";
 import { render } from "@testing-library/react";
 
 import RouteNotFound from '.';
 
 describe("<RouteNotFound />" , () => {
   function renderRouteNotFound() {
-    return render(
-      <Router>
-        <RouteNotFound />
-      </Router>
-    );
+    return render(<RouteNotFound />, { wrapper: Router });
   }
 
   test("renders a link back to the homepage", () => {
