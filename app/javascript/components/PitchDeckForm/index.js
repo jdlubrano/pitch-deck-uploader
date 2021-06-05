@@ -96,6 +96,7 @@ const PitchDeckForm = ({ pitchDeck }) => {
             type="text"
             className="form-control"
             id="pitchDeckName"
+            name="name"
             value={name}
             onChange={e => setName(e.target.value)}
             required />
@@ -104,6 +105,7 @@ const PitchDeckForm = ({ pitchDeck }) => {
           <input
             ref={fileInputRef}
             type="file"
+            name="file"
             className="form-control"
             aria-label="pitch deck file"
             onChange={handleFileChosen}

@@ -7,6 +7,10 @@ abort("The Rails environment is running in production mode!") if Rails.env.produ
 require 'rspec/rails'
 
 # Add additional requires below this line. Rails is not loaded until this point!
+require "capybara/rspec"
+require "webdrivers/chromedriver"
+
+Webdrivers.cache_time = 24.hours
 
 Dir[Rails.root.join('spec', 'support', '**', '*.rb')].sort.each { |f| require f }
 
@@ -24,6 +28,8 @@ RSpec.configure do |config|
 
   config.before(:suite) do
     FactoryBot.lint
+  ensure
+    PitchDeck.destroy_all
   end
 
   config.after(:each) do
@@ -37,3 +43,5 @@ Shoulda::Matchers.configure do |config|
     with.library :rails
   end
 end
+
+Capybara.javascript_driver = :selenium_chrome_headless
