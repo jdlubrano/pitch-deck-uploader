@@ -33,7 +33,7 @@ RSpec.configure do |config|
     PitchDeck.destroy_all
   end
 
-  config.after(:each) do
+  config.after(:suite) do
     FileUtils.rm_rf(ActiveStorage::Blob.service.root)
   end
 end
