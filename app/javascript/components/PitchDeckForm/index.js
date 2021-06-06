@@ -4,38 +4,15 @@ import { Link } from "react-router-dom";
 
 import { createPitchDeck } from "../../utils/Api";
 import DismissibleAlert from "../DismissibleAlert";
-import PdfPage from "../PdfPage";
-
-const pdfjs = require("pdfjs-dist/webpack");
 
 const PitchDeckForm = ({ pitchDeck }) => {
   const fileInputRef = useRef(null);
   const [name, setName] = useState(pitchDeck.name);
-  const [pdf, setPdf] = useState(null);
-  const [previewPage, setPreviewPage] = useState(null);
 
   const [notification, setNotification] = useState({
     message: null,
     status: null
   });
-
-  const handleFileChosen = async (event) => {
-    setPdf(null);
-    setPreviewPage(null);
-
-    const file = fileInputRef.current.files[0];
-
-    if (!file) {
-      return;
-    }
-
-    const buffer = await file.arrayBuffer();
-    const pdf = await pdfjs.getDocument(buffer).promise;
-    const page = await pdf.getPage(1);
-
-    setPdf(pdf);
-    setPreviewPage(page);
-  };
 
   const submitPitchDeck = async (event) => {
     event.preventDefault();
@@ -75,8 +52,6 @@ const PitchDeckForm = ({ pitchDeck }) => {
   const resetState = () => {
     setName("");
     fileInputRef.current.value = "";
-    setPdf(null);
-    setPreviewPage(null);
   };
 
   return (
@@ -108,7 +83,6 @@ const PitchDeckForm = ({ pitchDeck }) => {
             name="file"
             className="form-control"
             aria-label="pitch deck file"
-            onChange={handleFileChosen}
             required />
         </div>
         <div>
@@ -122,16 +96,6 @@ const PitchDeckForm = ({ pitchDeck }) => {
             <DismissibleAlert status={notification.status}>
               {notification.message}
             </DismissibleAlert>
-          </div>
-        </div>
-      )}
-      {pdf && previewPage && (
-        <div className="row">
-          <div className="col-12">
-            Showing page 1 of {pdf.numPages}
-          </div>
-          <div className="col-12">
-            <PdfPage pdfPage={previewPage} />
           </div>
         </div>
       )}
