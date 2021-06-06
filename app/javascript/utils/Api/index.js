@@ -3,15 +3,17 @@ export async function createPitchDeck({ name, file }) {
   formData.append("pitch_deck[name]", name);
   formData.append("pitch_deck[file]", file);
 
-  const response = await fetch("/api/pitch_decks", {
-    method: "POST",
-    headers: {
-      "Accept": "application/json"
-    },
-    body: formData
-  });
+  let response;
 
   try {
+    response = await fetch("/api/pitch_decks", {
+      method: "POST",
+      headers: {
+        "Accept": "application/json"
+      },
+      body: formData
+    });
+
     const responseJson = await response.json();
 
     return {
@@ -25,7 +27,7 @@ export async function createPitchDeck({ name, file }) {
 
     return {
       ok: false,
-      status: response.status,
+      status: response?.status,
     }
   }
 }
