@@ -14,6 +14,22 @@ page).
 * Ruby 3.0.1 ([installing with rvm](https://rvm.io/rvm/install))
 * [Postgres 9.6+](https://www.postgresql.org/download/)
 * NodeJS 14 ([installing with nvm](https://github.com/nvm-sh/nvm))
+* ImageMagick (see below)
+
+### Installing ImageMagick
+
+On Ubuntu
+
+```
+apt-get update
+apt-get install imagemagick
+```
+
+On Mac (OSX)
+
+```
+brew install imagemagick
+```
 
 ## Setup
 
