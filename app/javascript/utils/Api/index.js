@@ -31,3 +31,32 @@ export async function createPitchDeck({ name, file }) {
     }
   }
 }
+
+export async function getPitchDeck(id) {
+  let response;
+
+  try {
+    response = await fetch(`/api/pitch_decks/${id}`, {
+      method: "GET",
+      headers: {
+        "Accept": "application/json"
+      }
+    });
+
+    const responseJson = await response.json();
+
+    return {
+      ok: response.ok,
+      status: response.status,
+      pitchDeck: responseJson.pitch_deck
+    };
+  } catch(err) {
+    console.error(err);
+
+    return {
+      ok: false,
+      status: response?.status,
+    }
+  }
+
+}
