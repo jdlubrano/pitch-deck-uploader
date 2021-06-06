@@ -1,5 +1,11 @@
 module Api
   class PitchDecksController < ApiController
+    include ActiveStorage::SetCurrent
+
+    rescue_from ActiveRecord::RecordNotFound  do |exception|
+      render json: {code: :not_found, error: exception.message}, status: :not_found
+    end
+
     def create
       result = CreatePitchDeck.call(name: pitch_deck_params[:name], file: pitch_deck_params[:file])
 
@@ -14,6 +20,11 @@ module Api
 
         render json: {error: error}, status: :unprocessable_entity
       end
+    end
+
+    def show
+      @pitch_deck = PitchDeck.find(params[:id])
+      render :show
     end
 
     private

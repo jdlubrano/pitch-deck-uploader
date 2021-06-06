@@ -6,8 +6,8 @@ RSpec.describe "POST /api/pitch_decks" do
   let(:name) { "Test pitch deck" }
   let(:file) { Rack::Test::UploadedFile.new(file_contents, "application/pdf") }
   let(:file_contents) { Rails.root.join("spec", "support", "fixtures", "test_pitch_deck.pdf") }
-  let(:json_response) { JSON.parse(response.body, symbolize_names: true) }
   let(:params) { {pitch_deck: pitch_deck_params} }
+
   let(:headers) do
     {
       "ACCEPT" => "application/json",
