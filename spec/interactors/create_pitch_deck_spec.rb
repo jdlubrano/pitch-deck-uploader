@@ -28,6 +28,16 @@ RSpec.describe CreatePitchDeck do
       expect(pitch_deck.file.content_type).to eq("application/pdf")
     end
 
+    it "enqueues a job to generate a PitchDeckPreview" do
+      adapter = ActiveJob::Base.queue_adapter
+      ActiveJob::Base.queue_adapter = :test
+
+      create_pitch_deck
+      expect(GeneratePitchDeckPreviewJob).to have_been_enqueued.with(PitchDeck.last.id)
+
+      ActiveJob::Base.queue_adapter = adapter
+    end
+
     context "when the file is not a PDF" do
       let(:file) do
         Rack::Test::UploadedFile.new(

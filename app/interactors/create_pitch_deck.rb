@@ -14,6 +14,7 @@ class CreatePitchDeck
     context.fail!(error: pitch_deck.errors.full_messages.to_sentence) unless pitch_deck.valid?
 
     pitch_deck.save!
+    generate_pitch_deck_preview(pitch_deck)
 
     context.pitch_deck = pitch_deck
   end
@@ -28,5 +29,9 @@ class CreatePitchDeck
     if file.size > MAXIMUM_FILE_SIZE
       context.fail!(error: "File cannot exceed #{number_to_human_size(MAXIMUM_FILE_SIZE)}")
     end
+  end
+
+  def generate_pitch_deck_preview(pitch_deck)
+    GeneratePitchDeckPreviewJob.perform_later(pitch_deck.id)
   end
 end
