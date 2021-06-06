@@ -46,3 +46,4 @@ yarn-debug.log*
 
 spec/examples.txt
 *.swp
+*.DS_Store
