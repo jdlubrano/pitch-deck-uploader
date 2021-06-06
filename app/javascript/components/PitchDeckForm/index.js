@@ -1,13 +1,15 @@
 import React, { useRef, useState } from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 import { createPitchDeck } from "../../utils/Api";
 import DismissibleAlert from "../DismissibleAlert";
 
 const PitchDeckForm = ({ pitchDeck }) => {
   const fileInputRef = useRef(null);
+  const [disableSubmit, setDisableSubmit] = useState(false);
   const [name, setName] = useState(pitchDeck.name);
+  const history = useHistory();
 
   const [notification, setNotification] = useState({
     message: null,
@@ -17,36 +19,35 @@ const PitchDeckForm = ({ pitchDeck }) => {
   const submitPitchDeck = async (event) => {
     event.preventDefault();
 
+    setDisableSubmit(true);
+
+    setNotification({
+      message: null,
+      status: null
+    });
+
     const response = await createPitchDeck({
       name,
       file: fileInputRef.current.files[0]
     });
 
-    const notification = {};
-
     if (response.ok) {
-      resetState();
       const { pitchDeck } = response;
-
-      notification.message = (
-        <>
-          Successfully uploaded pitch deck!
-          <Link className="ms-2" to={`/pitch_decks/${pitchDeck.id}`}>View</Link>
-        </>
-      );
-
-      notification.status = "success";
+      history.push(`/pitch_decks/${pitchDeck.id}?created=true`);
     } else {
-      notification.message = (
-        <>
+      const message = (
+        <span>
           Failed to upload pitch deck. {response.error?.message || "Please try again."}
-        </>
+        </span>
       );
 
-      notification.status = "danger";
-    }
+      setDisableSubmit(false);
 
-    setNotification(notification);
+      setNotification({
+        message,
+        status: "danger"
+      });
+    }
   };
 
   const resetState = () => {
@@ -57,14 +58,6 @@ const PitchDeckForm = ({ pitchDeck }) => {
   return (
     <>
       <form className="row mb-3" onReset={resetState} onSubmit={submitPitchDeck} data-testid="test-pitch-deck-form">
-        <p className="col-12 mb-2">
-          Upload a New Pitch Deck
-        </p>
-        <div className="col-12 mb-4">
-          <small>
-            <Link to="/pitch_decks">Back to pitch decks</Link>
-          </small>
-        </div>
         <div className="col-12 mb-3">
           <label htmlFor="pitchDeckName" className="form-label">Name</label>
           <input
@@ -74,19 +67,23 @@ const PitchDeckForm = ({ pitchDeck }) => {
             name="name"
             value={name}
             onChange={e => setName(e.target.value)}
+            data-testid="test-pitch-deck-name-input"
             required />
         </div>
         <div className="col-12 mb-3">
+          <label htmlFor="pitchDeckFile" className="form-label">Presentation File (PDF only)</label>
           <input
+            id="pitchDeckFile"
             ref={fileInputRef}
             type="file"
             name="file"
             className="form-control"
             aria-label="pitch deck file"
+            data-testid="test-pitch-deck-file-input"
             required />
         </div>
         <div>
-          <button className="btn btn-primary me-3" type="submit">Submit</button>
+          <button className="btn btn-primary me-3" type="submit" disabled={disableSubmit}>Submit</button>
           <button className="btn btn-light" type="reset">Clear</button>
         </div>
       </form>

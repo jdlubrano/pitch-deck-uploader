@@ -15,7 +15,8 @@ RSpec.describe "creating a new pitch deck", js: true do
 
     click_on("Submit")
 
-    expect(page).to have_content("Successfully uploaded")
+    expect(page).to have_current_path(%r{/pitch_decks/\d+})
     expect(PitchDeck.count).to be(1)
+    expect(page).to have_current_path("/pitch_decks/#{PitchDeck.last.id}?created=true")
   end
 end
