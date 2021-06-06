@@ -22,7 +22,7 @@ On Ubuntu
 
 ```
 apt-get update
-apt-get install imagemagick
+apt-get install imagemagick ghostscript
 ```
 
 On Mac (OSX)
