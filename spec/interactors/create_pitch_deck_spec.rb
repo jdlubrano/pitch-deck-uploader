@@ -46,7 +46,7 @@ RSpec.describe CreatePitchDeck do
     end
 
     context "when the file is too large" do
-      let(:max_size) { 2.megabytes }
+      let(:max_size) { File.size(file_contents) - 1 }
 
       before do
         stub_const("CreatePitchDeck::MAXIMUM_FILE_SIZE", max_size)
@@ -56,7 +56,7 @@ RSpec.describe CreatePitchDeck do
         result = create_pitch_deck
 
         expect(result).not_to be_success
-        expect(result.error).to eq("File cannot exceed 2 MB")
+        expect(result.error).to match(/File cannot exceed/)
       end
     end
 
