@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_03_190000) do
+ActiveRecord::Schema.define(version: 2021_06_05_235020) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,6 +43,14 @@ ActiveRecord::Schema.define(version: 2021_06_03_190000) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "pitch_deck_previews", force: :cascade do |t|
+    t.bigint "pitch_deck_id", null: false
+    t.string "status", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["pitch_deck_id"], name: "index_pitch_deck_previews_on_pitch_deck_id"
+  end
+
   create_table "pitch_decks", force: :cascade do |t|
     t.string "name", null: false
     t.datetime "created_at", null: false
@@ -51,4 +59,5 @@ ActiveRecord::Schema.define(version: 2021_06_03_190000) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "pitch_deck_previews", "pitch_decks"
 end

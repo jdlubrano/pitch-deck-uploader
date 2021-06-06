@@ -29,6 +29,7 @@ RSpec.configure do |config|
   config.before(:suite) do
     FactoryBot.lint
   ensure
+    PitchDeckPreview.destroy_all
     PitchDeck.destroy_all
   end
 
