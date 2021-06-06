@@ -38,16 +38,18 @@ jobs:
           node-version: '14'
       - name: Ruby version
         run: ruby -v
+      - name: ImageMagick version
+        run: convert --version
+      - name: Change ImageMagick policy to allow pdf->png conversion.
+        run: |
+          sudo sed -i 's/^.*policy.*coder.*none.*PDF.*//' /etc/ImageMagick-6/policy.xml
+      - name: Install Ghostscript
+        run: sudo apt-get install ghostscript -y
+      - name: Ghostscript version
+        run: gs --version
       - name: Setup app
         run: ./bin/setup
       - name: Compile webpack for Capybara tests
         run: bundle exec rake webpacker:compile
-      - name: ImageMagick version
-        run: convert --version
-      - name: Ghostscript version
-        run: gs --version
-      - name: Change ImageMagick policy to allow pdf->png conversion.
-        run: |
-          sudo sed -i 's/^.*policy.*coder.*none.*PDF.*//' /etc/ImageMagick-6/policy.xml
       - name: Run tests
         run: bundle exec rake
