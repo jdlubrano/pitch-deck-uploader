@@ -1,5 +1,6 @@
 # Pitch Deck Uploader
 
+[![JS tests](https://github.com/jdlubrano/pitch-deck-uploader/actions/workflows/js_test.yml/badge.svg)](https://github.com/jdlubrano/pitch-deck-uploader/actions/workflows/js_test.yml)
 [![RSpec](https://github.com/jdlubrano/pitch-deck-uploader/actions/workflows/rspec.yml/badge.svg)](https://github.com/jdlubrano/pitch-deck-uploader/actions/workflows/rspec.yml)
 
 ## Overview
@@ -13,14 +14,35 @@ page).
 * Ruby 3.0.1 ([installing with rvm](https://rvm.io/rvm/install))
 * [Postgres 9.6+](https://www.postgresql.org/download/)
 * NodeJS 14 ([installing with nvm](https://github.com/nvm-sh/nvm))
+* ImageMagick (see below)
+
+### Installing ImageMagick
+
+On Ubuntu
+
+```
+apt-get update
+apt-get install imagemagick ghostscript
+```
+
+On Mac (OSX)
+
+```
+brew install imagemagick
+```
 
 ## Setup
 
 ### Without Docker
 
 ```
+# Set up environment
+nvm use
 ./bin/setup
+
+# Run tests to verify setup
 bundle exec rspec
+yarn test
 ```
 
 ### With Docker
