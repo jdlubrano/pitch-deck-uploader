@@ -69,9 +69,9 @@ RSpec.describe "POST /api/pitch_decks" do
           created_at: pitch_deck.created_at.iso8601,
           updated_at: pitch_deck.updated_at.iso8601,
           file: {
-            attachment_url: a_string_starting_with("http://"),
             download_url: a_string_starting_with("http://")
-          }
+          },
+          pitch_deck_preview: nil
         })
       end
     end
