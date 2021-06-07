@@ -2,21 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
 
 import { getPitchDeck } from "../../utils/Api";
-
-const dayjs = require("dayjs");
-const localizedFormat = require('dayjs/plugin/localizedFormat')
-dayjs.extend(localizedFormat)
-
-const Loading = () => <p>Loading pitch deck...</p>;
-
-const Error = ({ error, onRetry }) => {
-  return (
-    <div className="alert alert-danger" role="alert">
-      <span className="me-2">{error}</span>
-      <a href="#" onClick={onRetry}>Retry</a>
-    </div>
-  );
-};
+import { formatDateTime } from "../../utils/DateFormats";
+import RetriableError from "../RetriableError";
 
 const PitchDeck = ({ newlyCreated, pitchDeck }) => {
   const location = useLocation();
@@ -36,7 +23,7 @@ const PitchDeck = ({ newlyCreated, pitchDeck }) => {
           {pitchDeck.name}
         </div>
         <div className="col-12">
-          Created at: {dayjs(pitchDeck.created_at).format("LLL")}
+          Created at: {formatDateTime(pitchDeck.created_at)}
         </div>
         <a href={pitchDeck.file.download_url} target="_blank">Download</a>
       </div>
@@ -121,8 +108,8 @@ const ShowPitchDeck = () => {
         <Link to="/">Back to home</Link>
       </div>
       <div className="col-12">
-        {loading && <Loading />}
-        {!loading && error && <Error error={error} onRetry={retryLoad} />}
+        {loading && <p>Loading pitch deck...</p>}
+        {!loading && error && <RetriableError error={error} onRetry={retryLoad} />}
         {!loading && !error && <PitchDeck newlyCreated={newlyCreated} pitchDeck={pitchDeck} />}
       </div>
     </div>
