@@ -33,8 +33,6 @@ brew install imagemagick
 
 ## Setup
 
-### Without Docker
-
 ```
 # Set up environment
 nvm use
@@ -43,16 +41,6 @@ nvm use
 # Run tests to verify setup
 bundle exec rspec
 yarn test
-```
-
-### With Docker
-
-This application can also be run with
-[Docker Compose](https://docs.docker.com/compose/install/).
-
-```
-docker compose build
-docker compose run rails bash --login -c "bin/setup"
 ```
 
 ### Postgres Setup
