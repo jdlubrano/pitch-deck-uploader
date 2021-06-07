@@ -9,6 +9,8 @@ This Rails-React application allows a user to upload a PDF version of their
 investor pitch deck and converts the slides into PNG images (one image per
 page).
 
+[Usage Guide](https://github.com/jdlubrano/pitch-deck-uploader/wiki/Usage-Guide-Walkthrough)
+
 ## System Dependencies
 
 * Ruby 3.0.1 ([installing with rvm](https://rvm.io/rvm/install))
@@ -33,8 +35,6 @@ brew install imagemagick
 
 ## Setup
 
-### Without Docker
-
 ```
 # Set up environment
 nvm use
@@ -43,16 +43,6 @@ nvm use
 # Run tests to verify setup
 bundle exec rspec
 yarn test
-```
-
-### With Docker
-
-This application can also be run with
-[Docker Compose](https://docs.docker.com/compose/install/).
-
-```
-docker compose build
-docker compose run rails bash --login -c "bin/setup"
 ```
 
 ### Postgres Setup
