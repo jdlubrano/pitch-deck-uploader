@@ -31,7 +31,7 @@ apt-get install imagemagick ghostscript
 On Mac (OSX)
 
 ```
-brew install imagemagick
+brew install imagemagick ghostscript
 ```
 
 ## Setup
