@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { Link, useHistory } from "react-router-dom";
 
 import { createPitchDeck } from "../../utils/Api";
-import DismissibleAlert from "../DismissibleAlert";
 
 const PitchDeckForm = ({ pitchDeck }) => {
   const fileInputRef = useRef(null);
@@ -90,9 +89,9 @@ const PitchDeckForm = ({ pitchDeck }) => {
       {notification.status && (
         <div className="row">
           <div className="col-12">
-            <DismissibleAlert status={notification.status}>
+            <div className={`alert alert-${notification.status}`} role="alert">
               {notification.message}
-            </DismissibleAlert>
+            </div>
           </div>
         </div>
       )}

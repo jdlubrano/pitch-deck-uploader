@@ -62,7 +62,7 @@ describe("<PitchDeckForm />", () => {
     });
   });
 
-  it("redirects the user to the pitch deck page after a successful upload", () => {
+  it("redirects the user to the pitch deck page after a successful upload", async () => {
     mockCreatePitchDeckSuccess();
     const history = createMemoryHistory();
 
@@ -83,12 +83,13 @@ describe("<PitchDeckForm />", () => {
     userEvent.click(submitButton);
     expect(submitButton).toBeDisabled();
 
-    waitFor(() => {
-      expect(history.location).toEqual("/pitch_decks/1234");
+    await waitFor(() => {
+      expect(history.location.pathname).toEqual("/pitch_decks/1234");
+      expect(history.location.search).toEqual("?created=true");
     });
   });
 
-  it("renders an error message when pitch deck creation fails", () => {
+  it("renders an error message when pitch deck creation fails", async () => {
     const mockCreatePitchDeck = jest.fn(() => {
       return Promise.resolve({
         ok: false
@@ -107,8 +108,8 @@ describe("<PitchDeckForm />", () => {
     userEvent.type(getByTestId("test-pitch-deck-name-input"), "test name");
     userEvent.click(getByText("Submit"));
 
-    waitFor(() => {
-      expect(getByText("Failed to upload pitch deck")).toBeVisible();
+    await waitFor(() => {
+      expect(getByText("Failed to upload pitch deck. Please try again.")).toBeVisible();
       expect(getByText("Submit")).not.toBeDisabled();
     });
   });

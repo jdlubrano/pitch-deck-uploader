@@ -10,6 +10,7 @@ import {
 } from "react-router-dom";
 
 import NewPitchDeck from "../NewPitchDeck";
+import ShowPitchDeck from "../ShowPitchDeck";
 import RouteNotFound from "../RouteNotFound";
 
 const App = props => {
@@ -24,6 +25,9 @@ const App = props => {
         <Switch>
           <Route path="/pitch_decks/new">
             <NewPitchDeck />
+          </Route>
+          <Route path="/pitch_decks/:id">
+            <ShowPitchDeck />
           </Route>
           <Route path="*">
             <RouteNotFound />
