@@ -7,8 +7,7 @@ RSpec.describe "GET /api/pitch_decks/:id" do
 
   let(:headers) do
     {
-      "ACCEPT" => "application/json",
-      "CONTENT_TYPE" => "application/x-www-form-urlencoded"
+      "ACCEPT" => "application/json"
     }
   end
 

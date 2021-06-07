@@ -6,6 +6,16 @@ module Api
       render json: {code: :not_found, error: exception.message}, status: :not_found
     end
 
+    def index
+      @pitch_decks = PitchDeck.order(id: :desc).all
+      render :index
+    end
+
+    def show
+      @pitch_deck = PitchDeck.find(params[:id])
+      render :show
+    end
+
     def create
       result = CreatePitchDeck.call(name: pitch_deck_params[:name], file: pitch_deck_params[:file])
 
@@ -20,11 +30,6 @@ module Api
 
         render json: {error: error}, status: :unprocessable_entity
       end
-    end
-
-    def show
-      @pitch_deck = PitchDeck.find(params[:id])
-      render :show
     end
 
     private
