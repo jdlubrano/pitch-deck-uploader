@@ -174,6 +174,55 @@ describe("<ShowPitchDeck />", () => {
     });
   });
 
+  it("polls for the pitch deck preview to check if one becomes available", async () => {
+    jest.useFakeTimers();
+
+    let firstAttempt = true;
+
+    Api.getPitchDeck = jest.fn(() => {
+      let pitchDeck = {
+        id: pitchDeckId,
+        name: "Test name",
+        created_at: "2021-06-06T14:22:11Z",
+        updated_at: "2021-06-06T14:22:11Z",
+        file: {
+          download_url: "http://test.localhost"
+        }
+      };
+
+      if (firstAttempt) {
+        firstAttempt = false;
+      } else {
+        pitchDeck.pitch_deck_preview = {
+          status: "complete",
+          slides: [
+            {image_url: "http://test.localhost/slide.png"}
+          ]
+        };
+      }
+
+      return Promise.resolve({ok: true, pitchDeck});
+    });
+
+    const { getByAltText, getByTestId } = renderComponent();
+
+    await waitFor(async () => {
+      await jest.runOnlyPendingTimers();
+      expect(getByTestId("test-processing-info")).toBeVisible();
+    });
+
+    jest.advanceTimersByTime(5000);
+
+    await waitFor(async () => {
+      await jest.runOnlyPendingTimers();
+      const img = getByAltText("slide 0");
+      expect(img).toBeVisible();
+      expect(img).toHaveAttribute("src", "http://test.localhost/slide.png");
+    });
+
+    jest.useRealTimers();
+  });
+
   it("renders an error when the pitch deck preview failed", async () => {
     const pitchDeck = {
       id: pitchDeckId,

@@ -75,6 +75,7 @@ const ShowPitchDeck = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [pitchDeck, setPitchDeck] = useState(null);
+  let previewPoller = null;
 
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search.slice(1));
@@ -84,7 +85,12 @@ const ShowPitchDeck = () => {
     const response = await getPitchDeck(id);
 
     if (response.ok) {
-      setPitchDeck(response.pitchDeck);
+      const { pitchDeck } = response;
+      setPitchDeck(pitchDeck);
+
+      if (!pitchDeck.pitch_deck_preview) {
+        previewPoller = setInterval(pollForPreview, 5000);
+      }
     } else {
       setError("Failed to load pitch deck.");
     }
@@ -92,8 +98,27 @@ const ShowPitchDeck = () => {
     setLoading(false);
   }
 
+  async function pollForPreview() {
+    const response = await getPitchDeck(id);
+
+    if (response.ok) {
+      const { pitchDeck } = response;
+
+      if (pitchDeck.pitch_deck_preview) {
+        setPitchDeck(pitchDeck);
+        clearInterval(previewPoller);
+      }
+    }
+  }
+
   useEffect(() => {
     loadPitchDeck();
+
+    return function cleanup() {
+      if (previewPoller) {
+        clearInterval(previewPoller);
+      }
+    }
   }, []);
 
   function retryLoad() {
@@ -105,7 +130,7 @@ const ShowPitchDeck = () => {
   return (
     <div className="row">
       <div className="col-12 mb-4">
-        <Link to="/">Back to home</Link>
+        <Link to="/">Back to pitch decks</Link>
       </div>
       <div className="col-12">
         {loading && <p>Loading pitch deck...</p>}
