@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 
 import { getPitchDeck } from "../../utils/Api";
 
@@ -18,10 +18,20 @@ const Error = ({ error, onRetry }) => {
   );
 };
 
-const PitchDeck = ({ pitchDeck }) => {
+const PitchDeck = ({ newlyCreated, pitchDeck }) => {
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+
   return (
     <>
       <div className="row">
+        {newlyCreated && (
+          <div className="col-12">
+            <div className="alert alert-success" data-testid="test-created-message">
+              You successfully uploaded a pitch deck!
+            </div>
+          </div>
+        )}
         <div className="col-12 h4">
           {pitchDeck.name}
         </div>
@@ -79,6 +89,10 @@ const ShowPitchDeck = () => {
   const [error, setError] = useState(null);
   const [pitchDeck, setPitchDeck] = useState(null);
 
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search.slice(1));
+  const newlyCreated = searchParams.get("created") === "true";
+
   async function loadPitchDeck() {
     const response = await getPitchDeck(id);
 
@@ -109,7 +123,7 @@ const ShowPitchDeck = () => {
       <div className="col-12">
         {loading && <Loading />}
         {!loading && error && <Error error={error} onRetry={retryLoad} />}
-        {!loading && !error && <PitchDeck pitchDeck={pitchDeck} />}
+        {!loading && !error && <PitchDeck newlyCreated={newlyCreated} pitchDeck={pitchDeck} />}
       </div>
     </div>
   );

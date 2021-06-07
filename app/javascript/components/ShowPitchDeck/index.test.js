@@ -9,9 +9,9 @@ import * as Api from "../../utils/Api";
 describe("<ShowPitchDeck />", () => {
   const pitchDeckId = 1234;
 
-  function renderComponent() {
+  function renderComponent(routePath = `/pitch_decks/${pitchDeckId}`) {
     const history = createMemoryHistory();
-    history.push(`/pitch_decks/${pitchDeckId}`);
+    history.push(routePath);
 
     return render(
       <Router history={history}>
@@ -131,6 +131,26 @@ describe("<ShowPitchDeck />", () => {
       const downloadLink = getByText("Download");
       expect(downloadLink).toBeVisible();
       expect(downloadLink).toHaveAttribute("href", "http://test.localhost");
+    });
+  });
+
+  it("renders a success message when the created=true query param is present", async () => {
+    const pitchDeck = {
+      id: pitchDeckId,
+      name: "Test name",
+      created_at: "2021-06-06T14:22:11Z",
+      updated_at: "2021-06-06T14:22:11Z",
+      file: {
+        download_url: "http://test.localhost"
+      }
+    };
+
+    mockApiSuccess(pitchDeck);
+
+    const { getByTestId } = renderComponent(`/pitch_decks/${pitchDeckId}?created=true`);
+
+    await waitFor(() => {
+      expect(getByTestId("test-created-message")).toBeVisible();
     });
   });
 
