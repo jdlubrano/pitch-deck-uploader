@@ -13,7 +13,7 @@ const NewPitchDeck = () => {
         </p>
         <div className="col-12 mb-4">
           <small>
-            <Link to="/pitch_decks">Back to pitch decks</Link>
+            <Link to="/">Back to pitch decks</Link>
           </small>
         </div>
       </div>

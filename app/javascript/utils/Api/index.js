@@ -58,5 +58,32 @@ export async function getPitchDeck(id) {
       status: response?.status,
     }
   }
+}
 
+export async function getPitchDecks() {
+  let response;
+
+  try {
+    response = await fetch(`/api/pitch_decks`, {
+      method: "GET",
+      headers: {
+        "Accept": "application/json"
+      }
+    });
+
+    const responseJson = await response.json();
+
+    return {
+      ok: response.ok,
+      status: response.status,
+      pitchDecks: responseJson.pitch_decks
+    };
+  } catch(err) {
+    console.error(err);
+
+    return {
+      ok: false,
+      status: response?.status,
+    }
+  }
 }
