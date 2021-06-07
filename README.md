@@ -9,7 +9,8 @@ This Rails-React application allows a user to upload a PDF version of their
 investor pitch deck and converts the slides into PNG images (one image per
 page).
 
-[Usage Guide](https://github.com/jdlubrano/pitch-deck-uploader/wiki/Usage-Guide-Walkthrough)
+* [Usage Guide](https://github.com/jdlubrano/pitch-deck-uploader/wiki/Usage-Guide-Walkthrough)
+* [Architecture Notes](https://github.com/jdlubrano/pitch-deck-uploader/wiki/Architecture-Notes)
 
 ## System Dependencies
 
