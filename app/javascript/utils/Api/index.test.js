@@ -1,4 +1,4 @@
-import { createPitchDeck, getPitchDeck } from ".";
+import { createPitchDeck, getPitchDeck, getPitchDecks } from ".";
 
 describe("Api", () => {
   beforeEach(() => {
@@ -134,6 +134,58 @@ describe("Api", () => {
       fetch.mockReject(new Error("Something went wrong"));
 
       const response = await getPitchDeck(pitchDeckId);
+
+      expect(response.ok).toBe(false);
+    });
+  });
+
+  describe("getPitchDecks", () => {
+    function mockSuccessfulResponse() {
+      return fetch.mockResponseOnce(JSON.stringify({
+        pitch_decks: []
+      }));
+    }
+
+    it("calls GET /api/pitch_decks", async () => {
+      mockSuccessfulResponse();
+
+      const response = await getPitchDecks();
+
+      expect(fetch).toHaveBeenCalledWith("/api/pitch_decks", {
+        method: "GET",
+        headers: {
+          "Accept": "application/json"
+        }
+      });
+    });
+
+    it("returns pitch decks data", async () => {
+      mockSuccessfulResponse();
+
+      const response = await getPitchDecks();
+
+      expect(response).toEqual({
+        ok: true,
+        status: 200,
+        pitchDecks: []
+      });
+    });
+
+    it("returns an unsuccessful response when the server responds with an error code", async () => {
+      fetch.mockResponses([
+        JSON.stringify({error: "Something went wrong"}),
+        {status: 500}
+      ]);
+
+      const response = await getPitchDecks();
+
+      expect(response.ok).toBe(false);
+    });
+
+    it("returns an unsuccessful response when the API call is rejected", async () => {
+      fetch.mockReject(new Error("Something went wrong"));
+
+      const response = await getPitchDecks();
 
       expect(response.ok).toBe(false);
     });
