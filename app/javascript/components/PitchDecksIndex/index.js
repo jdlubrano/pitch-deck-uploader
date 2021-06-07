@@ -7,8 +7,12 @@ import { getPitchDecks } from "../../utils/Api";
 import { formatDateTime } from "../../utils/DateFormats";
 
 const PitchDecksTable = ({ pitchDecks }) => {
+  if (pitchDecks.length === 0) {
+    return null;
+  }
+
   return (
-    <table className="table" data-testid="test-pitch-decks-table">
+    <table className="table mt-4" data-testid="test-pitch-decks-table">
       <thead>
         <tr>
           <th scope="col">Name</th>
@@ -70,6 +74,7 @@ const PitchDecksIndex = () => {
         {!loading && !error && (
           <>
             <h2>Pitch Decks</h2>
+            <Link to="/pitch_decks/new">Upload a new pitch deck</Link>
             <PitchDecksTable pitchDecks={pitchDecks} />
           </>
         )}

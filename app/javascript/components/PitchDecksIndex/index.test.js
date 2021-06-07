@@ -72,7 +72,14 @@ describe("<PitchDecksIndex />", () => {
         return Promise.resolve({ok: false});
       }
 
-      const pitchDecks = [];
+      const pitchDecks = [
+        {
+          id: 1,
+          name: "Test pitch deck",
+          created_at: "2021-06-06T14:22:11Z",
+          updated_at: "2021-06-06T14:22:11Z"
+        }
+      ];
 
       return Promise.resolve({ok: true, pitchDecks});
     });
@@ -87,6 +94,18 @@ describe("<PitchDecksIndex />", () => {
 
     await waitFor(() => {
       expect(getByTestId("test-pitch-decks-table")).toBeVisible();
+    });
+  });
+
+  it("renders a link to upload a new pitch deck", async () => {
+    mockApiSuccess([]);
+
+    const { getByText } = renderComponent();
+
+    await waitFor(() => {
+      const newLink = getByText("Upload a new pitch deck");
+      expect(newLink).toBeVisible();
+      expect(newLink).toHaveAttribute("href", "/pitch_decks/new");
     });
   });
 
