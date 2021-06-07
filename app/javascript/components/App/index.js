@@ -10,6 +10,7 @@ import {
 } from "react-router-dom";
 
 import NewPitchDeck from "../NewPitchDeck";
+import PitchDecksIndex from "../PitchDecksIndex";
 import ShowPitchDeck from "../ShowPitchDeck";
 import RouteNotFound from "../RouteNotFound";
 
@@ -23,6 +24,9 @@ const App = props => {
       </nav>
       <div className="container route-content pt-4">
         <Switch>
+          <Route exact path="/">
+            <PitchDecksIndex />
+          </Route>
           <Route path="/pitch_decks/new">
             <NewPitchDeck />
           </Route>
