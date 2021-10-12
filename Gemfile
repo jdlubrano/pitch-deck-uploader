@@ -10,7 +10,7 @@ gem 'interactor', '~> 3.1'
 gem 'jbuilder', '~> 2.7'
 gem 'mini_magick', '~> 4.11'
 gem 'pg', '~> 1.2'
-gem 'puma', '~> 5.0'
+gem 'puma', '~> 5.5'
 gem 'webpacker', '~> 5.0'
 
 # Use Redis adapter to run Action Cable in production
