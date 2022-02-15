@@ -25,9 +25,10 @@ group :development, :test do
   gem 'capybara', '~> 3.35'
   gem 'dotenv-rails', '~> 2.7'
   gem 'factory_bot_rails', '~> 6.2'
+  gem 'rexml', '~> 3.2.5'
   gem 'rspec', '~> 3.10'
   gem 'rspec-rails', '~> 5.0'
-  gem 'selenium-webdriver', '~> 3.142'
+  gem 'selenium-webdriver', '~> 3.0'
   gem 'shoulda-matchers', '~> 4.5'
   gem 'webdrivers', '~> 4.0', require: false
 end
